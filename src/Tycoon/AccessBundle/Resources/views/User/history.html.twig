@@ -1,0 +1,137 @@
+{% extends 'TycoonCatalogBundle::layout.html.twig' %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block leftSidebar %}
+    <ul class="nav nav-pills nav-stacked">
+        <li>
+            <a href="{{ path('Access_User_account') }}">My profile</a>
+        </li>
+        <li>
+            <a href="{{ path('Access_User_security') }}">Security settings</a>
+        </li>
+        <li>
+            <a href="{{ path('Access_User_profile') }}">Edit profile</a>
+        </li>
+        <li class="active">
+            <a href="{{ path('Access_User_history') }}">Order history</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    {% if app.user == null %}
+        <h2 class="centered"> Access denied. Please log in.</h2>
+    {% else %}
+        <div class="tycoon-page-header"></div>
+        <div class="col-sm-2"></div>
+        <div class="centered col-sm-8">
+            {% if orders is not empty %}
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="centered">Order</th>
+                        <th class="centered">Status</th>
+                        <th class="centered">Date</th>
+                        <th class="centered">Details</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for order in orders if order.status == 'finalized' or order.status == 'failed - no money' %}
+                        <tr>
+                            <td>Order #{{ order.id }}</td>
+                            <td>{{ order.status }}</td>
+                            <td>{{ order.date|date("d/m/Y H-i-s") }}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#myModal{{ order.id }}">
+                                    View details
+                                </button>
+
+                                <div id="myModal{{ order.id }}" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close"
+                                                        data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">
+                                                    Order #{{ order.id }}
+                                                </h4>
+                                                <h4 class="modal-title">
+                                                    {{ order.date|date("d/m/Y H-i-s") }}
+                                                </h4>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th colspan="2">Ordered product</th>
+                                                        <th class="cart-item-centered">Quantity</th>
+                                                        <th class="cart-item-centered">Total Price</th>
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                    {% set totalPrice = 0 %}
+
+                                                    {% for item in order.items %}
+                                                        {% set itemPrice = item.productPrice * item.quantity %}
+                                                        {% set totalPrice = totalPrice + itemPrice %}
+                                                        <tr>
+                                                            <td class="cart-item-image">
+                                                                <img class="cart-item-image"
+                                                                     src="/images/{{ item.product.path }}"/>
+                                                            </td>
+                                                            <td class="cart-item-name">
+                                                                {{ item.product.name }}
+                                                            </td>
+                                                            <td class="cart-item-centered cart-item-quantity">
+                                                                {{ item.quantity }}
+                                                            </td>
+                                                            <td class="cart-item-centered cart-item-price">
+                                                                <span class="gold-icon"></span>
+                                                                {{ itemPrice|number_format(2, '.', ',') }}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+
+                                                    <tr class="cart-last-row">
+                                                        <td class="cart-last-row cart-item-image">
+                                                        </td>
+                                                        <td class="cart-last-row cart-item-name">
+                                                        </td>
+                                                        <td class="cart-last-row cart-item-centered cart-item-quantity">
+                                                            Total Price:
+                                                        </td>
+                                                        <td class="cart-last-row cart-item-centered cart-item-price">
+                                                            <span class="gold-icon"></span>
+                                                            {{ totalPrice|number_format(2, '.', ',') }}
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <h3>You do not have any orders. Browse the products to place an order by clicking
+                    <a href="{{ path('Catalog_Product_list') }}">here</a>.
+                </h3>
+            {% endif %}
+        </div>
+        <div class="col-sm-2"></div>
+    {% endif %}
+{% endblock %}

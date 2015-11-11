@@ -1,0 +1,23 @@
+<header>
+    <p class="category_header">FIND BY ATTRIBUTES</p>
+</header>
+
+<div class="centered">
+    <form id="attributes_filter" class="attributes-checkbox" action="{{ path('Catalog_Product_list') }}"
+          method="get" {{ form_enctype(attributes_list_form) }}>
+        {% for attribute in attributes %}
+            {% set minValue = 'min' ~ attribute %}
+            {% set maxValue = 'max' ~ attribute %}
+            <div class="attribute-name">
+                {{ attribute }}
+            </div>
+
+            <div class="attributes-row">
+                {{ form_row(attribute(attributes_list_form, minValue)) }}
+                {{ form_row(attribute(attributes_list_form, maxValue)) }}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary" id="submit-filters">Find</button>
+    </form>
+</div>

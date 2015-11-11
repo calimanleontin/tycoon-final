@@ -1,0 +1,34 @@
+<form action="{{ path('Catalog_Product_edit', {type: product.className|lower, id: product.id}) }}" method="post"
+      class="add_product_form" {{ form_enctype(product_form) }}>
+    <div class="col-sm-6">
+        <h2 class="centered">Product</h2>
+
+        <div class="form-group">
+            {{ form_row(product_form.name) }}
+            {{ form_row(product_form.price) }}
+            {{ form_row(product_form.description) }}
+            {{ form_row(product_form.stock) }}
+            {{ form_row(product_form.categories) }}
+            {{ form_row(product_form.file, { 'label': 'Image' }) }}
+
+            <label>Current Image</label>
+            {% if product.path == null %}
+                none
+            {% else %}
+                <img class="current-image" src="/images/{{ product.path }}"/>
+            {% endif %}
+        </div>
+    </div>
+
+    <ul class="col-sm-6 attributes" data-prototype="{{ form_widget(product_form.attributes.vars.prototype)|e }}">
+        <h2 class="centered">Attributes</h2>
+        {% for attribute in product_form.attributes %}
+            <li class="attribute-form-entry"> {{ form_row(attribute.name) }} {{ form_row(attribute.value) }} {{ form_row(attribute.unit_of_measurement) }}</li>
+        {% endfor %}
+    </ul>
+
+    {{ form_widget(product_form._token) }}
+    <div class="col-xs-12 centered">
+        <button type="submit" class="btn btn-primary">Submit changes</button>
+    </div>
+</form>

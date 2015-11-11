@@ -1,0 +1,30 @@
+<header>
+    <p class="category_header">CATEGORIES</p>
+</header>
+<p>
+<ul id="category_list">
+    {% for category in categories %}
+        <li class="btn btn-primary category-element">
+            <div class="category-element-btn">
+                <a href="{{ path('Catalog_Category_listById', { 'id': category.id }) }}">
+                    {{ category.name }}
+                </a>
+                {% if  app.user != null and app.user.adminFlag == 1 %}
+                    <a href="{{ path('Catalog_Category_edit', {'id': category.id}) }}" class="category-edit-btn">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                {% endif %}
+            </div>
+        </li>
+    {% else %}
+        <p>There are no categories.</p>
+    {% endfor %}
+    {% if  app.user != null and app.user.adminFlag == 1 %}
+        <li class="btn btn-primary category-element">
+            <a href="{{ path('Catalog_Category_edit') }}" class="category-add-button">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </li>
+    {% endif %}
+</ul>
+</p>

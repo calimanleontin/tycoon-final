@@ -1,0 +1,61 @@
+{% extends 'TycoonCatalogBundle::layout.html.twig' %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block leftSidebar %}
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="{{ path('Access_User_account') }}">My profile</a></li>
+        <li><a href="{{ path('Access_User_security') }}">Security settings</a></li>
+        <li><a href="{{ path('Access_User_profile') }}">Edit profile</a></li>
+        <li><a href="{{ path('Access_User_history') }}">Order history</a></li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    {% if app.user == null %}
+        <h2 class="centered"> Access denied. Please log in.</h2>
+    {% else %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="flash alert alert-success fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        <div class="tycoon-page-header"></div>
+
+        <div class="left-content col-xs-6">
+            <div>Username:</div>
+            <div>E-mail:</div>
+            <div>First name:</div>
+            <div>Last name:</div>
+            <div>User-type:</div>
+        </div>
+
+        <div class="right-content col-xs-6">
+            <div>{{ app.user.name }}</div>
+            <div>{{ app.user.email }}</div>
+            <div>
+                {% if app.user.firstname == null %}
+                    empty
+                {% else %}
+                    {{ app.user.firstname }}
+                {% endif %}
+            </div>
+            <div>
+                {% if app.user.lastname == null %}
+                    empty
+                {% else %}
+                    {{ app.user.lastname }}
+                {% endif %}
+            </div>
+            <div>
+                {% if app.user.adminflag == 1 %}
+                    admin
+                {% else %}
+                    normal
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,74 @@
+{% for product in products %}
+    <div class="col-sm-6 col-lg-4 col-xs-12 product-container">
+        <div class="product wow fadeInUp">
+            <div class="product_image_container">
+                {% if product.path is null %}
+                    <img class="product_image" src="/images/product.jpg"/>
+                {% else %}
+                    <img class="product_image" src="/images/{{ product.path }}"/>
+                {% endif %}
+
+                <div class="attributes-dropdown dropdown">
+                    <button type="button" class="dropdown-toggle attributes-btn" data-toggle="dropdown">
+                        attributes
+                    </button>
+                    <ul class="attributes-expanded dropdown-menu">
+                        {% for attribute in product.attributes %}
+                            <li>
+                                {{ attribute.name|capitalize }}:{{ attribute.value }} {{ attribute.unitOfMeasurement }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="product_name">{{ product.name|upper }}</div>
+
+            <div class="product_description">
+                <span style="font-weight: bold">
+                    {{ product.className }}
+                </span>: {{ product.description }}
+            </div>
+
+            <div class="product-stock-container">
+                {% if product.stock > 0 %}
+                    <p class="product_stock product_stock_yes">
+                        Availability <span class="glyphicon glyphicon-ok"></span>
+                    </p>
+                {% else %}
+                    <p class="product_stock product_stock_no">
+                        Availability <span class="glyphicon glyphicon-remove"></span>
+                    </p>
+                {% endif %}
+
+                <span class="gold-icon"></span>
+
+                <p class="product_price">{{ product.price|number_format(2, '.', ',') }}</p>
+            </div>
+
+            {% if app.user != null and app.user.adminFlag == 1 %}
+                <a href="{{ path('Catalog_Product_edit', { 'type' : product.className|lower, 'id' : product.id }) }}">
+                    <button type="button" class="btn btn-primary product-button">
+                        <span class="glyphicon glyphicon-edit"></span>
+                        Edit product
+                    </button>
+                </a>
+            {% else %}
+                <a href="{{ path('Order_Cart_add', { 'id' : product.id }) }}" type="button">
+                    <button type="button" class="btn btn-primary product-button">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                        add to cart
+                    </button>
+                </a>
+            {% endif %}
+            <a href="{{ path('Catalog_Product_addToCompare', { 'id' : product.id }) }}" type="button">
+                <button type="button" class="btn btn-primary product-button">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                    compare
+                </button>
+            </a>
+        </div>
+    </div>
+{% else %}
+    <h3 class="centered">There are no products that matched your criteria in Tycoon Shop.</h3>
+{% endfor %}

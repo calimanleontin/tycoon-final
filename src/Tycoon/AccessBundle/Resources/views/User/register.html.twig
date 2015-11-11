@@ -1,0 +1,44 @@
+{% extends 'TycoonCatalogBundle::layout.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% if app.user == null %}
+        <h1 class="tycoon-page-header centered">NEW ACCOUNT</h1>
+    {% endif %}
+
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8">
+        {% for flashMessage in app.session.flashbag.get('errorRegistration') %}
+            <div class="flash alert alert-danger fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        {% for flashMessage in app.session.flashbag.get('warning') %}
+            <div class="flash alert alert-danger fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        {% if app.user == null %}
+            {% include 'TycoonAccessBundle:User:register_form.html.twig' with { 'register_form': register_form } %}
+        {% else %}
+            <div class="flash alert alert-danger">
+                You already have an account.
+            </div>
+            <br/>
+        {% endif %}
+    </div>
+
+    <div class="col-md-2"></div>
+{% endblock %}
+
+{% block cart %}
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}

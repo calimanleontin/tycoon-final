@@ -1,0 +1,8 @@
+services:
+#    tycoon_subscription.example:
+#        class: Tycoon\SubscriptionBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    tycoon_subscription.subscription_service:
+        class: Tycoon\SubscriptionBundle\Service\SubscriptionService
+        arguments: [@doctrine.orm.entity_manager]

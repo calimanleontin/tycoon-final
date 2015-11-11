@@ -1,0 +1,156 @@
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 centered">
+                <a href="{{ path('Catalog_Product_list') }}">
+                    <img src="/images/logo.png" class="tycoon-logo">
+
+                    <div class="tycoon-brand">
+                        TCS
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-5">
+                {% include ('TycoonCatalogBundle:Product:search.html.twig') %}
+            </div>
+
+            <div class="col-md-4 centered">
+                <div class="header-items-container">
+                    <div class="dropdown">
+                        <button class="header-items dropdown-toggle" type="button" id="menu2"
+                                data-toggle="dropdown">
+                            {% if app.user is null %}
+                            <span class="glyphicon glyphicon-log-in cart-icon"></span>
+                                        <span class="cart-items">
+                                            Sign in
+                                            {% else %}
+                                            <span class="glyphicon glyphicon-user cart-icon"></span>
+                                            <span class="cart-items">
+                                            {{ app.user.name }}
+                                                {% endif %}
+                                    </span>
+                        </button>
+
+                        <ul class="my-account-expanded dropdown-menu dropdown-menu-left">
+                            <span class="glyphicon glyphicon-chevron-up chevron-up-item-left"></span>
+                            {% if app.user != null %}
+                                <li role="presentation">
+                                    <a href="{{ path('Access_User_account') }}">
+                                        My profile
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="{{ path('Access_User_security') }}">
+                                        Security settings
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="{{ path('Access_User_profile') }}">
+                                        Edit profile
+                                    </a>
+                                </li>
+                                {% if app.user.adminFlag != 1 %}
+                                    <li role="presentation">
+                                        <a href="{{ path('Access_User_history') }}">
+                                            Order history
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                <li class="divider"></li>
+                                <li role="presentation">
+                                    <a href="{{ path('Access_User_logout') }}">
+                                        Logout
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li role="presentation">
+                                    {% render controller('TycoonAccessBundle:User:login') %}
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+                {% block cart %}
+                    {% if app.session.get('cart') != null %}
+                        {% set items = app.session.get('cart').items %}
+                    {% else %}
+                        {% set items = null %}
+                    {% endif %}
+
+                    {% if app.user == null or app.user.adminFlag == 0 %}
+
+                        <div class="header-items-container ">
+                            <div class="dropdown">
+                                <button class="header-items dropdown-toggle" type="button" id="menu1"
+                                        data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-shopping-cart cart-icon"></span>
+
+                                            <span class="badge cart-items">
+                                                {{ items|length }}
+                                            </span>
+                                </button>
+
+                                <ul class="cart-expanded dropdown-menu dropdown-menu-right">
+                                    <span class="glyphicon glyphicon-chevron-up chevron-up-item-right"></span>
+
+                                    {% for item in items %}
+                                        <li role="presentation">
+                                            <a role="menuitem">
+                                                {{ item.quantity }} x {{ item.product.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                    {% if items != null %}
+                                        <li class="divider"></li>
+                                        <li role="presentation">
+                                            <a href="{{ path('Order_Cart_list') }}">
+                                                View shopping cart
+                                            </a>
+                                        </li>
+                                    {% else %}
+                                        <li role="presentation" class="no-products">No
+                                            products
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+                {% endblock %}
+
+                {% block compare %}
+                    {% if app.session.get('compare') != null %}
+                        {% set items = app.session.get('compare') %}
+                    {% else %}
+                        {% set items = null %}
+                    {% endif %}
+
+                    <div class="header-items-container ">
+                        <a href="{{ path('Catalog_Product_listCompare') }}">
+                            <button class="header-items">
+                                <span class="glyphicon glyphicon-book cart-icon"></span>
+                                        <span class="badge cart-items">
+                                            {{ items|length }}
+                                        </span>
+                            </button>
+                        </a>
+                    </div>
+
+                {% endblock %}
+            </div>
+        </div>
+        {% if app.user != null %}
+            {% if app.user.adminFlag != 1 %}
+                <a href="{{ path('Access_User_game') }}">
+                    <div class="go-to-game">
+                        Go to Game
+                    </div>
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,40 @@
+{% extends 'TycoonCatalogBundle::layout.html.twig' %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block body %}
+    {% if app.user == null %}
+        <div class="flash alert alert-danger">
+            You are not allowed to view this page. Please log in with your administrator account.
+        </div>
+        <br/>
+    {% elseif app.user.adminFlag == 0 %}
+        <div class="flash alert alert-danger">
+            You are not allowed to view this page. Please log in with your administrator account.
+        </div>
+        <br/>
+    {% else %}
+        <div class="row">
+            <div class="col-xs-12">
+                {% if category.id == null %}
+                    <h1 class="tycoon-page-header centered">Add category</h1>
+                {% else %}
+                    <h1 class="tycoon-page-header centered">Edit category</h1>
+                {% endif %}
+
+                {% for flashMessage in app.session.flashbag.get('failedInsert') %}
+                    <div class="flash alert alert-warning fade in">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                {% include 'TycoonCatalogBundle:Category:form.html.twig' with { 'category': category, 'category_form': category_form } %}
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    {% endif %}
+{% endblock %}

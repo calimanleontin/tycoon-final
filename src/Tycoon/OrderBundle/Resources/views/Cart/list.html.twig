@@ -1,0 +1,97 @@
+{% extends 'TycoonCatalogBundle::layout.html.twig' %}
+
+{% block body %}
+    <section class="product_list">
+        <div class="container-fluid">
+            {% for flashMessage in app.session.flashbag.get('warning') %}
+                <div class="flash alert alert-danger fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+            <h2>Products in Shopping Cart</h2>
+
+            {% if cart is not null and cart.items is not empty %}
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th colspan="2">Ordered product</th>
+                    <th class="cart-item-centered">Quantity</th>
+                    <th class="cart-item-centered">Total Price</th>
+                    <th class="cart-item-centered">Remove</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set totalPrice = 0 %}
+
+                {% for item in cart.items %}
+                    {% set itemPrice = item.product.price * item.quantity %}
+                    {% set totalPrice = totalPrice + itemPrice %}
+                    <tr>
+                        <td class="cart-item-image">
+                            <img class="cart-item-image" src="/images/{{ item.product.path }}"/>
+                        </td>
+                        <td class="cart-item-name">
+                            {{ item.product.name }}
+                        </td>
+                        <td class="cart-item-centered cart-item-quantity">
+                            <a href="{{ path('Order_Cart_less', { 'id' : item.product.id }) }}">
+                                <span class="glyphicon glyphicon-minus-sign"></span>
+                            </a>
+                            {{ item.quantity }}
+                            <a href="{{ path('Order_Cart_more', { 'id' : item.product.id }) }}">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                            </a>
+                        </td>
+                        <td class="cart-item-centered cart-item-price">
+                            <span class="gold-icon"></span>
+                            {{ itemPrice|number_format(2, '.', ',') }}
+                        </td>
+                        <td class="cart-item-centered cart-item-remove">
+                            <a href="{{ path('Order_Cart_delete', { 'id' : item.product.id }) }}">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                <tr class="cart-last-row">
+                    <td class="cart-last-row cart-item-image">
+                    </td>
+                    <td class="cart-last-row cart-item-name">
+                    </td>
+                    <td class="cart-last-row cart-item-centered cart-item-quantity">
+                        Total Price:
+                    </td>
+                    <td class="cart-last-row cart-item-centered cart-item-price">
+                        <span class="gold-icon"></span>
+                        {{ totalPrice|number_format(2, '.', ',') }}
+                    </td>
+
+                    <td class="cart-last-row cart-item-centered cart-item-remove">
+                        {% if app.user != null %}
+                            <a href="{{ path('Order_Order_finalize') }}">
+                                <button class="btn btn-primary">
+                                    Finalize order
+                                </button>
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p>There are no products in shopping cart.</p>
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('/bundles/tycoonorder/css/order.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block cart %}
+{% endblock %}

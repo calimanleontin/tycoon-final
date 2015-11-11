@@ -1,0 +1,16 @@
+services:
+#    tycoon_order.example:
+#        class: Tycoon\OrderBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+     tycoon_order.order_service:
+         class: Tycoon\OrderBundle\Service\OrderService
+         arguments: [@doctrine.orm.entity_manager, @service_container]
+
+     tycoon_order.payment_service:
+         class: Tycoon\OrderBundle\Service\PaymentService
+         arguments: [@doctrine.orm.entity_manager, @service_container]
+
+     tycoon_order.delivery_service:
+         class: Tycoon\OrderBundle\Service\DeliveryService
+         arguments: [@doctrine.orm.entity_manager, @service_container]

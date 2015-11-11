@@ -1,0 +1,86 @@
+{% extends 'TycoonCatalogBundle::layout.html.twig' %}
+
+{% block leftSidebar %}
+    <ul>
+        {% for type in types %}
+            <a href="{{ path('Catalog_Product_listCompare', { 'type' : type }) }}" type="button">
+                <button type="button" class="btn btn-primary product-button">
+                    {{ type }}
+                </button>
+            </a>
+
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="flash alert alert-success fade in">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {% for flashMessage in app.session.flashbag.get('warning') %}
+        <div class="flash alert alert-danger fade in">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {% for product in products %}
+        <div class="col-sm-6 col-lg-4 col-xs-12 product-container">
+            <div class="product wow fadeInUp">
+                <div class="product_image_container">
+                    {% if product.path is null %}
+                        <img class="product_image" src="/images/product.jpg"/>
+                    {% else %}
+                        <img class="product_image" src="/images/{{ product.path }}"/>
+                    {% endif %}
+                </div>
+
+                <div class="product_name">{{ product.name|upper }}</div>
+
+                <ul class="attributes-expanded dropdown-menu">
+                    {% for attribute in product.attributes %}
+                        <li>{{ attribute.name|capitalize }}
+                            :{{ attribute.value }} {{ attribute.unitOfMeasurement }}</li>
+                    {% endfor %}
+                </ul>
+
+                <div class="product_description">
+                    <span style="font-weight: bold">
+                        {{ product.className }}
+                    </span>: {{ product.description }}
+                </div>
+
+                <div class="product-stock-container">
+                    {% if product.stock > 0 %}
+                        <p class="product_stock product_stock_yes">
+                            Availability <span class="glyphicon glyphicon-ok"></span>
+                        </p>
+                    {% else %}
+                        <p class="product_stock product_stock_no">
+                            Availability <span class="glyphicon glyphicon-remove"></span>
+                        </p>
+                    {% endif %}
+                    <span class="gold-icon"></span>
+
+                    <p class="product_price">{{ product.price|number_format(2, '.', ',') }}</p>
+                </div>
+
+                <a href="{{ path('Catalog_Product_eraseFromList', { 'id' : product.id }) }}" type="button">
+                    <button type="button" class="btn btn-primary product-button">
+                        <span class="glyphicon glyphicon-alert "></span>
+                        erase
+                    </button>
+                </a>
+
+                <input type="checkbox" class="{{ product.className }}" id="{{ product.id }}" onclick="processing('{{ product.className }}', '{{ product.id }}')" >
+                <label for="{{ product.id }}">COMPARE</label>
+            </div>
+        </div>
+    {% else %}
+        <h3 class="centered">There are no products to compare.</h3>
+    {% endfor %}
+{% endblock %}

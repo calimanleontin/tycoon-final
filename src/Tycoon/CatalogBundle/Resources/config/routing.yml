@@ -1,0 +1,77 @@
+Catalog_Category_listById:
+    path: /category/{id}
+    defaults: { _controller: TycoonCatalogBundle:Category:listById }
+    requirements:
+        methods: GET
+        id: \d+
+
+Catalog_Product_edit:
+    path: /product/edit/{type}/{id}
+    defaults: {_controller: TycoonCatalogBundle:Product:edit, type: consumable, id: null }
+    requirements:
+        id: \d+
+        type: consumable|fighter|subscription
+
+Catalog_Product_list:
+    path: /
+    defaults: { _controller: TycoonCatalogBundle:Product:list}
+    requirements:
+        methods:  GET
+
+Catalog_Category_edit:
+    path: /category/edit/{id}
+    defaults: {_controller: TycoonCatalogBundle:Category:edit, id: null}
+    requirements:
+        method: GET|POST
+        id: \d+
+
+Catalog_Product_show:
+    path: /product/show/{type}
+    defaults: {_controller: TycoonCatalogBundle:Product:show}
+    requirements:
+        method: GET
+
+Catalog_Product_search:
+    path: /search
+    defaults: {_controller: TycoonCatalogBundle:Product:search}
+
+Catalog_Product_listCompare:
+    path: /listCompare
+    defaults: {_controller: TycoonCatalogBundle:Product:listCompare}
+
+Catalog_Product_addToCompare:
+    path: /addToCompare/{id}
+    defaults: {_controller: TycoonCatalogBundle:Product:addToCompare}
+    requirements:
+            methods:  GET
+            id: \d+
+
+Catalog_Product_compare:
+    path: /compare/{id1}/{id2}
+    defaults: {_controller: TycoonCatalogBundle:Product:compare}
+    requirements:
+            methods:  GET
+
+Catalog_Product_deleteFromCompare:
+    path: /deleteCompare/{type}
+    defaults: {_controller: TycoonCatalogBundle:Product:deleteCompare}
+    requirements:
+            methods:  GET
+
+Catalog_Product_eraseFromList:
+    path: /erase/{id}
+    defaults: {_controller: TycoonCatalogBundle:Product:eraseFromList}
+    requirements:
+            methods:  POST
+
+Catalog_Page_about:
+    path: /about
+    defaults: {_controller: TycoonCatalogBundle:Page:about}
+
+Catalog_Page_contact:
+    path: /contact
+    defaults: {_controller: TycoonCatalogBundle:Page:contact}
+
+Catalog_Product_getProductNames:
+    path: /getproducts
+    defaults: {_controller: TycoonCatalogBundle:Product:getProductNames}

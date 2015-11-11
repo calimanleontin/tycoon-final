@@ -1,0 +1,8 @@
+<form action="{{ path('Access_User_register' , {'slug': slug }) }}" method="post" {{ form_enctype(register_form) }}
+      class="register_form">
+    <div class="form-group">
+        {{ form_rest(register_form) }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>

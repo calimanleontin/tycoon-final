@@ -1,0 +1,10 @@
+<form action="{{ path('Catalog_Page_contact') }}" method="post">
+
+    <div class="form-group">
+        {{ form_row(contact_form.name) }}
+        {{ form_row(contact_form.email) }}
+        {{ form_rest(contact_form) }}
+    </div>
+
+    <button type="Submit" class="btn btn-primary">Submit</button>
+</form>

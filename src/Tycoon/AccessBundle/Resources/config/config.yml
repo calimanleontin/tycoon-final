@@ -1,0 +1,7 @@
+parameters:
+    tycoon_game_server_address: http://tycoon-game.internship1-dev.emag.local/
+    tycoon_game_server_uri: app_dev.php/register
+    tycoon_access_game_uri: app_dev.php/login
+    tycoon_session_end_uri: app_dev.php/logout
+    tycoon_session_start_uri: app_dev.php/session_init
+    secure_key: tycoon_shop_game

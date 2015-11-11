@@ -1,0 +1,11 @@
+{% extends 'TycoonCatalogBundle::layout.html.twig' %}
+
+{% block mainContent %}
+    <div class="flash alert alert-danger">
+        Error : You must be logged in to visit the game !
+    </div>
+    <div class="centered">
+        {% render controller('TycoonAccessBundle:User:login') %}
+    </div>
+
+{% endblock %}

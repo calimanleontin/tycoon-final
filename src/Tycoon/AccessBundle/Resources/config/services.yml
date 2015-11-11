@@ -1,0 +1,16 @@
+services:
+#    tycoon_access.example:
+#        class: Tycoon\AccessBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    tycoon_access.database_user_provider:
+        class: Tycoon\AccessBundle\Service\DatabaseUserProvider
+        arguments: [@doctrine.orm.entity_manager]
+
+    tycoon_access.password_encoder:
+        class: Tycoon\AccessBundle\Service\PasswordEncoder
+        arguments: [8, false]
+
+    tycoon_access.user_notifier:
+        class: Tycoon\AccessBundle\Service\UserNotifier
+        arguments: [@service_container]

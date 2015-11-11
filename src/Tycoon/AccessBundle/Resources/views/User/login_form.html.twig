@@ -1,0 +1,16 @@
+<form action="{{ path('Access_User_login' ) }}" method="post" {{ form_enctype(login_form) }} class="login-form">
+    <div class="form-group">
+        {{ form_errors(login_form) }}
+        {{ form_widget(login_form) }}
+    </div>
+
+    {{ form_rest(login_form) }}
+
+    <button type="submit" class="btn btn-primary">
+        Login
+    </button>
+    or
+    <a href="{{ path('Access_User_register') }}" class="btn btn-default">
+        Register
+    </a>
+</form>

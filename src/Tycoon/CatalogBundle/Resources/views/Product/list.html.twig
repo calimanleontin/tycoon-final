@@ -1,0 +1,78 @@
+{% extends 'TycoonCatalogBundle::layout.html.twig' %}
+
+{% block body %}
+
+    <section id="products">
+
+        <h1 class="tycoon-page-header centered">PRODUCTS IN SHOP</h1>
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="flash alert alert-success fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        {% for flashMessage in app.session.flashbag.get('warning') %}
+            <div class="flash alert alert-danger fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        {% include 'TycoonCatalogBundle:Product:product.html.twig' with { 'products': products } %}
+
+        {% if app.user != null %}
+            {% if app.user.adminFlag == 1 %}
+                <div class="col-sm-6 col-lg-4 col-xs-12 product-container">
+                    <div class="wow fadeInUp" id="add_product"></div>
+
+                    <div class="product" id="add_product_links">
+                        <div class="choice_product">
+                            <a href="{{ path('Catalog_Product_edit', { 'type': 'consumable' }) }}">Consumable</a>
+                        </div>
+                        <div class="choice_product">
+                            <a href="{{ path('Catalog_Product_edit', { 'type': 'fighter' }) }}">Fighter</a>
+                        </div>
+                        <div class="choice_product">
+                            <a href="{{ path('Catalog_Product_edit', { 'type': 'subscription' }) }}">Subscription</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </section>
+
+    {% if pagesCount is defined and pagesCount > 1 %}
+        {% set page = attributesList|last %}
+
+        <div class="centered">
+            <ul class="pagination">
+                {% if page > 1 %}
+                    {% set attributesList = attributesList|merge({'page': 1}) %}
+                    <li>
+                        <a href="{{ path('Catalog_Product_list', attributesList) }}#products">First</a>
+                    </li>
+                {% endif %}
+                {% for currentPage in page - 2..page + 2 %}
+                    {% set attributesList = attributesList|merge({'page': currentPage}) %}
+                    {% if currentPage == page %}
+                        <li class="active">
+                            <a>{{ page }}</a>
+                        </li>
+                    {% elseif currentPage > 1 and currentPage < pagesCount %}
+                        <li>
+                            <a href="{{ path('Catalog_Product_list', attributesList) }}#products">{{ currentPage }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page < pagesCount %}
+                    {% set attributesList = attributesList|merge({'page': pagesCount}) %}
+                    <li>
+                        <a href="{{ path('Catalog_Product_list', attributesList) }}#products">Last</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+
+{% endblock %}

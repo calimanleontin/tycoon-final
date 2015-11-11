@@ -1,0 +1,37 @@
+Order_Cart_list:
+    path: /cart
+    defaults: { _controller: TycoonOrderBundle:Cart:list }
+    requirements:
+        methods:  GET
+
+Order_Cart_add:
+    path: /cart/add/{id}
+    defaults: { _controller: TycoonOrderBundle:Cart:add }
+    requirements:
+        methods:  GET
+        id: \d+
+
+Order_Cart_more:
+    path: /cart/more/{id}
+    defaults: { _controller: TycoonOrderBundle:Cart:more }
+    requirements:
+        methods: GET
+        id: \d+
+
+Order_Cart_less:
+    path: /cart/less/{id}
+    defaults: { _controller: TycoonOrderBundle:Cart:less }
+    requirements:
+        methods: GET
+        id: \d+
+
+Order_Cart_delete:
+    path: /cart/delete/{id}
+    defaults: { _controller: TycoonOrderBundle:Cart:delete }
+    requirements:
+        methods:  GET
+        id: \d+
+
+Order_Order_finalize:
+    path: /finalize
+    defaults: { _controller: TycoonOrderBundle:Order:finalize }

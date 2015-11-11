@@ -1,0 +1,71 @@
+{% extends 'TycoonCatalogBundle::layout.html.twig' %}
+
+{% block leftSidebar %}
+    <ul>
+        {% for type in types %}
+            <a href="{{ path('Catalog_Product_listCompare', { 'type' : type }) }}" type="button">
+                <button type="button" class="btn btn-primary product-button">
+                    {{ type }}
+                </button>
+            </a>
+        {% endfor %}
+    </ul>
+{% endblock %}
+{% block body %}
+
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="flash alert alert-success fade in">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {% for flashMessage in app.session.flashbag.get('warning') %}
+        <div class="flash alert alert-danger fade in">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {% for product in products %}
+        <div class="col-sm-6 col-lg-4 col-xs-12 product-container">
+            <div class="product wow fadeInUp">
+                <div class="product_image_container">
+                    {% if product.path is null %}
+                        <img class="product_image" src="/images/product.jpg"/>
+                    {% else %}
+                        <img class="product_image" src="/images/{{ product.path }}"/>
+                    {% endif %}
+
+                    <div class="product_name" style="padding-bottom: 0;">{{ product.name|upper }}</div>
+
+                    <div class="product-stock-container">
+                        {% if product.stock > 0 %}
+                            <p class="product_stock product_stock_yes">
+                                Availability <span class="glyphicon glyphicon-ok"></span>
+                            </p>
+                        {% else %}
+                            <p class="product_stock product_stock_no">
+                                Availability <span class="glyphicon glyphicon-remove"></span>
+                            </p>
+                        {% endif %}
+                        <span class="gold-icon"></span>
+
+                        <p class="product_price">{{ product.price|number_format(2, '.', ',') }}</p>
+                    </div>
+
+                    <ul class="attributes-expanded ">
+                        {% for attribute in product.attributes %}
+                            {{ attribute.name|capitalize }}
+                            :{{ attribute.value }} {{ attribute.unitOfMeasurement }}<br/>
+                        {% endfor %}
+                        <div class="push"></div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h3 class="centered">There are no products to compare.</h3>
+    {% endfor %}
+
+{% endblock %}

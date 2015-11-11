@@ -1,0 +1,2 @@
+parameters:
+    tycoon_game_send_notification: app_dev.php/subscription_notification

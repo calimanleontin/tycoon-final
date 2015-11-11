@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: internship-sql1-dev
+    database_port: null
+    database_name: tycoon_shop
+    database_user: leontin.caliman
+    database_password: parolaleontin
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: ThisTokenIsNotSoSecretChangeIt

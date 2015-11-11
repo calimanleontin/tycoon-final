@@ -1,0 +1,15 @@
+tycoon_subscription:
+    resource: "@TycoonSubscriptionBundle/Resources/config/routing.yml"
+    prefix:   /
+
+tycoon_order:
+    resource: "@TycoonOrderBundle/Resources/config/routing.yml"
+    prefix:   /
+
+tycoon_access:
+    resource: "@TycoonAccessBundle/Resources/config/routing.yml"
+    prefix:   /
+
+tycoon_catalog:
+    resource: "@TycoonCatalogBundle/Resources/config/routing.yml"
+    prefix:   /

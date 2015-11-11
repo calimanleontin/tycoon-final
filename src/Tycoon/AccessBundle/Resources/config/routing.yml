@@ -1,0 +1,39 @@
+Access_User_register:
+    path: /register/{slug}
+    defaults: {_controller: TycoonAccessBundle:User:register , slug:"undefined" }
+
+Access_User_login:
+    path: /login
+    defaults: {_controller: TycoonAccessBundle:User:login}
+    requirements:
+        methods: POST
+
+Access_User_logout:
+    path: /logout
+    defaults: {_controller: TycoonAccessBundle:User:logout}
+    requirements:
+        methods: GET
+
+Access_User_profile:
+    path: /profile
+    defaults: {_controller: TycoonAccessBundle:User:profile}
+
+Access_User_account:
+    path: /account
+    defaults: {_controller: TycoonAccessBundle:User:account}
+
+Access_User_security:
+    path: /security
+    defaults: {_controller: TycoonAccessBundle:User:security}
+    
+Access_User_history:
+    path: /history
+    defaults: {_controller: TycoonAccessBundle:User:history}
+
+Access_User_game:
+    path: /game
+    defaults: {_controller: TycoonAccessBundle:User:game}
+
+Access_User_login_page:
+    path: /loginpage
+    defaults: {_controller: TycoonAccessBundle:User:loginpage}

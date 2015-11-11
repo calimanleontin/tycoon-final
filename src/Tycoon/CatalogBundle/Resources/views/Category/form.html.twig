@@ -1,0 +1,9 @@
+<form action="{{ path('Catalog_Category_edit', { id: category.id}) }}" method="post">
+    <div class="form-group">
+        {{ form_row(category_form.name) }}
+        {{ form_row(category_form.description) }}
+        {{ form_rest(category_form) }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

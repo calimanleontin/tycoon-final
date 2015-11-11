@@ -1,0 +1,4 @@
+parameters:
+    tycoon_game_order_uri: app_dev.php/additem
+    tycoon_game_check_gold_uri: app_dev.php/requesttransaction
+    tycoon_game_send_notification: app_dev.php/receive

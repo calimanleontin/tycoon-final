@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Tycoon shop{% endblock %}</title>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    {% block stylesheets %}
+        <link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet">
+        <link href="{{ asset('css/main.css') }}" type="text/css" rel="stylesheet"/>
+        <link href="{{ asset('css/animate.css') }}" type="text/css" rel="stylesheet"/>
+        <link href="{{ asset('bundles/tycooncatalog/css/catalog.css') }}" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    {% endblock %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+    {% block javascripts %}
+        <script src="{{ asset('javascript/jquery-1.11.3.js') }}"></script>
+        <script src="{{ asset('javascript/addAttributeField.js') }}"></script>
+        <script src="{{ asset('javascript/addProduct.js') }}"></script>
+        <script src="{{ asset('javascript/compareProducts.js') }}"></script>
+        <script src="{{ asset('javascript/wow.js') }}"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+        <script>
+            new WOW().init();
+        </script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="{{ asset('javascript/bootstrap.js') }}"></script>
+    {% endblock %}
+</head>
+
+<body>
+<div class="main-wrapper">
+    {% block header %}
+    {% endblock %}
+
+    <div class="push hidden-xs hidden-sm"></div>
+    <div class="push-10px hidden-md hidden-lg"></div>
+    <div class="container">
+        {% block mainContent %}
+        {% endblock %}
+    </div>
+
+    <div class="push"></div>
+</div>
+
+<footer id="footer" class="midnight-grey">
+    {% block footer %}
+    {% endblock %}
+</footer>
+</body>
+</html>

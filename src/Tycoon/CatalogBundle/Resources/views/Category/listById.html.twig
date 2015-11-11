@@ -1,0 +1,47 @@
+{% extends 'TycoonCatalogBundle::layout.html.twig' %}
+
+{% block title %} {{ category.name }} {% endblock %}
+
+{% block body %}
+    <article>
+        <header>
+            <h1 class="tycoon-page-header centered">{{ category.name|upper }}</h1>
+        </header>
+    </article>
+    <section id="products">
+        <h4 class="centered category-description">Description: <span
+                    class="text-muted">{{ category.description }}</span></h4>
+
+        {% include 'TycoonCatalogBundle:Product:product.html.twig' with { 'products': category.products } %}
+    </section>
+
+    {% if pagesCount is not null %}
+        <div class="centered">
+            <ul class="pagination">
+                {% if page > 1 %}
+                    <li>
+                        <a href="{{ path('Catalog_Category_listById', { 'id': category.id }) }}#products">First</a>
+                    </li>
+                {% endif %}
+                {% for currentPage in page - 2..page + 2 %}
+                    {% if currentPage == page %}
+                        <li class="active">
+                            <a>{{ page }}</a>
+                        </li>
+                    {% elseif currentPage > 1 and currentPage < pagesCount %}
+                        <li>
+                            <a href="{{ path('Catalog_Category_listById', { 'page': currentPage, 'id': category.id }) }}#products">{{ currentPage }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page < pagesCount %}
+                    <li>
+                        <a href="{{ path('Catalog_Category_listById', { 'page': pagesCount, 'id': category.id}) }}#products">Last</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
