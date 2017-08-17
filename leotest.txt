@@ -1,4 +1,4 @@
-//aici scriu ceva
+//aici scriu ceva //acum comentez asta
 si inca ceva
 si inca ceva
 asta e test
